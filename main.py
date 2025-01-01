@@ -36,8 +36,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_start.setEnabled(False)
         self.button_stop.setEnabled(True)
         self.button_finish.setEnabled(True)
-        # self.remaining_time = 25 * 60
-        self.remaining_time = 1 * 5
+        self.remaining_time = 25 * 60
         self.time_remain.setText("25:00")
         self.timer.start(1000)  # 计时器每秒触发一次
 
