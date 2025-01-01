@@ -56,6 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.text.setText(f"已完成 {times} 次番茄时间")
             self.button_start.setEnabled(True)
             self.button_stop.setEnabled(False)
+            self.button_finish.setEnabled(False)
         else:
             minutes, seconds = divmod(self.remaining_time, 60)
             self.time_remain.setText(f"{minutes:02}:{seconds:02}")
@@ -66,7 +67,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.timer.stop()
         elif self.button_stop.text() == "继续":
             self.button_stop.setText("暂停")
-            self.timer.start(1000)
+            self.timer.start()
 
     def finish_time(self):
         self.timer.stop()
@@ -74,7 +75,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_start.setEnabled(True)
         self.button_stop.setEnabled(False)
         self.button_finish.setEnabled(False)
-
 
 
 app = QApplication(sys.argv)
