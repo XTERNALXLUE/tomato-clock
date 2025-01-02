@@ -14,66 +14,91 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 490)
+        MainWindow.resize(640, 360)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(0, 0, 801, 351))
+        self.widget.setGeometry(QtCore.QRect(0, 0, 640, 260))
         self.widget.setObjectName("widget")
         self.text = QtWidgets.QLabel(self.widget)
-        self.text.setGeometry(QtCore.QRect(150, 40, 551, 71))
+        self.text.setGeometry(QtCore.QRect(60, 10, 551, 71))
         self.text.setStyleSheet("QLabel {\n"
 "    font-size: 50px;\n"
 "}")
         self.text.setObjectName("text")
         self.time_remain = QtWidgets.QLabel(self.widget)
-        self.time_remain.setGeometry(QtCore.QRect(270, 150, 271, 111))
+        self.time_remain.setGeometry(QtCore.QRect(190, 110, 251, 111))
         self.time_remain.setStyleSheet("QLabel {\n"
 "    font-size: 100px;\n"
 "}")
         self.time_remain.setObjectName("time_remain")
         self.widget_2 = QtWidgets.QWidget(self.centralwidget)
-        self.widget_2.setGeometry(QtCore.QRect(0, 349, 800, 141))
+        self.widget_2.setGeometry(QtCore.QRect(0, 260, 640, 100))
         self.widget_2.setObjectName("widget_2")
-        self.layoutWidget = QtWidgets.QWidget(self.widget_2)
-        self.layoutWidget.setGeometry(QtCore.QRect(-10, -1, 811, 151))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
-        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.horizontalLayout.setSpacing(0)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.button_start = QtWidgets.QPushButton(self.layoutWidget)
+        self.button_finish = QtWidgets.QPushButton(self.widget_2)
+        self.button_finish.setEnabled(False)
+        self.button_finish.setGeometry(QtCore.QRect(320, 0, 160, 100))
+        self.button_finish.setStyleSheet("QPushButton {\n"
+"        background-color: rgba(255, 255, 255, 50);\n"
+"        border: none;\n"
+"    }\n"
+"    QPushButton:hover {\n"
+"        background-color: rgba(255, 255, 255, 80);  \n"
+"        color: #002fa7;\n"
+"        border: 1px solid white;\n"
+"    }\n"
+"    QPushButton:pressed {\n"
+"        background-color: rgba(255, 255, 255, 100);\n"
+"    }")
+        self.button_finish.setObjectName("button_finish")
+        self.button_setbackground = QtWidgets.QPushButton(self.widget_2)
+        self.button_setbackground.setGeometry(QtCore.QRect(480, 0, 160, 100))
+        self.button_setbackground.setStyleSheet("QPushButton {\n"
+"        background-color: rgba(255, 255, 255, 50);\n"
+"        border: none;\n"
+"    }\n"
+"    QPushButton:hover {\n"
+"        background-color: rgba(255, 255, 255, 80);  \n"
+"        color: #002fa7;\n"
+"        border: 1px solid white;\n"
+"    }\n"
+"    QPushButton:pressed {\n"
+"        background-color: rgba(255, 255, 255, 100);\n"
+"    }")
+        self.button_setbackground.setObjectName("button_setbackground")
+        self.button_start = QtWidgets.QPushButton(self.widget_2)
         self.button_start.setEnabled(True)
+        self.button_start.setGeometry(QtCore.QRect(0, 0, 160, 100))
         self.button_start.setBaseSize(QtCore.QSize(0, 0))
         self.button_start.setStyleSheet("QPushButton {\n"
-"    height: 140;\n"
-"    margin: 0;\n"
-"}")
+"        background-color: rgba(255, 255, 255, 50);\n"
+"        border: none;\n"
+"    }\n"
+"    QPushButton:hover {\n"
+"        background-color: rgba(255, 255, 255, 80);  \n"
+"        color: #002fa7;\n"
+"        border: 1px solid white;\n"
+"    }\n"
+"    QPushButton:pressed {\n"
+"        background-color: rgba(255, 255, 255, 100);\n"
+"    }")
         self.button_start.setObjectName("button_start")
-        self.horizontalLayout.addWidget(self.button_start)
-        self.button_stop = QtWidgets.QPushButton(self.layoutWidget)
+        self.button_stop = QtWidgets.QPushButton(self.widget_2)
         self.button_stop.setEnabled(False)
+        self.button_stop.setGeometry(QtCore.QRect(160, 0, 160, 100))
         self.button_stop.setStyleSheet("QPushButton {\n"
-"    height: 140;\n"
-"    margin: 0;\n"
-"}")
+"        background-color: rgba(255, 255, 255, 50);\n"
+"        border: none;\n"
+"    }\n"
+"    QPushButton:hover {\n"
+"        background-color: rgba(255, 255, 255, 80);  \n"
+"        color: #002fa7;\n"
+"        border: 1px solid white;\n"
+"    }\n"
+"    QPushButton:pressed {\n"
+"        background-color: rgba(255, 255, 255, 100);\n"
+"    }")
         self.button_stop.setObjectName("button_stop")
-        self.horizontalLayout.addWidget(self.button_stop)
-        self.button_finish = QtWidgets.QPushButton(self.layoutWidget)
-        self.button_finish.setEnabled(False)
-        self.button_finish.setStyleSheet("QPushButton {\n"
-"    height: 140;\n"
-"    margin: 0;\n"
-"}")
-        self.button_finish.setObjectName("button_finish")
-        self.horizontalLayout.addWidget(self.button_finish)
-        self.button_setbackground = QtWidgets.QPushButton(self.layoutWidget)
-        self.button_setbackground.setStyleSheet("QPushButton {\n"
-"    height: 140;\n"
-"    margin: 0;\n"
-"}")
-        self.button_setbackground.setObjectName("button_setbackground")
-        self.horizontalLayout.addWidget(self.button_setbackground)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -84,7 +109,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.text.setText(_translate("MainWindow", "已完成 10 次番茄时间"))
         self.time_remain.setText(_translate("MainWindow", "25:00"))
-        self.button_start.setText(_translate("MainWindow", "开始"))
-        self.button_stop.setText(_translate("MainWindow", "暂停"))
         self.button_finish.setText(_translate("MainWindow", "结束"))
         self.button_setbackground.setText(_translate("MainWindow", "设置背景"))
+        self.button_start.setText(_translate("MainWindow", "开始"))
+        self.button_stop.setText(_translate("MainWindow", "暂停"))

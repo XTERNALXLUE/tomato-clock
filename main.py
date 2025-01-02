@@ -1,5 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+import os
+import shutil
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget
 from PyQt5.QtCore import QTimer
 from ui.tomato import Ui_MainWindow
 
@@ -9,12 +11,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.remaining_time = 25 * 60
         self.setupUi(self)
+        self.setFixedSize(640, 360)
+        
+        # 检查并设置背景图片
+        img_dir = os.path.join(os.getcwd(), 'img')
+        if os.path.exists(img_dir):
+            for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
+                bg_path = os.path.join(img_dir, f'background{ext}').replace('\\', '/')
+                if os.path.exists(bg_path):
+                    self.setStyleSheet(f"""
+                        QMainWindow {{
+                            background-image: url({bg_path});
+                            background-position: center;
+                            background-repeat: no-repeat;
+                        }}
+                    """)
+                    break
+        
         self.init()
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_time)  # 连接计时器的 timeout 信号到 update_time 方法
         self.button_start.clicked.connect(self.start_time)
         self.button_stop.clicked.connect(self.stop_time)
         self.button_finish.clicked.connect(self.finish_time)
+        self.button_setbackground.clicked.connect(self.set_background)
 
     def init(self):
         times = 0
@@ -76,8 +96,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_stop.setEnabled(False)
         self.button_finish.setEnabled(False)
 
+    def set_background(self):
+        file_dialog = QFileDialog()
+        file_dialog.setFileMode(QFileDialog.ExistingFile)
+        file_dialog.setNameFilter("Images (*.png *.jpg *.jpeg *.bmp)")
+        
+        if file_dialog.exec_():
+            # 获取选择的文件路径
+            source_file = file_dialog.selectedFiles()[0]
+            
+            # 先复制图片到img目录
+            img_dir = os.path.join(os.getcwd(), 'img')
+            os.makedirs(img_dir, exist_ok=True)
+            _, ext = os.path.splitext(source_file)
+            target_file = os.path.join(img_dir, f'background{ext}')
+            shutil.copy(source_file, target_file)
+
+            img_dir = os.path.join(os.getcwd(), 'img')
+            if os.path.exists(img_dir):
+                for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
+                    bg_path = os.path.join(img_dir, f'background{ext}').replace('\\', '/')
+                    if os.path.exists(bg_path):
+                        self.setStyleSheet(f"""
+                            QMainWindow {{
+                                background-image: url({bg_path});
+                                background-position: center;
+                                background-repeat: no-repeat;
+                            }}
+                        """)  
+
 
 app = QApplication(sys.argv)
 window = MainWindow()
+window.setWindowTitle("番茄钟")
 window.show()
 app.exec()

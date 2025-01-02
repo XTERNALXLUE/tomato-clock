@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>490</height>
+    <width>640</width>
+    <height>360</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,15 +19,15 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>801</width>
-      <height>351</height>
+      <width>640</width>
+      <height>260</height>
      </rect>
     </property>
     <widget class="QLabel" name="text">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>40</y>
+       <x>60</x>
+       <y>10</y>
        <width>551</width>
        <height>71</height>
       </rect>
@@ -44,9 +44,9 @@
     <widget class="QLabel" name="time_remain">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>150</y>
-       <width>271</width>
+       <x>190</x>
+       <y>110</y>
+       <width>251</width>
        <height>111</height>
       </rect>
      </property>
@@ -64,92 +64,133 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>349</y>
-      <width>800</width>
-      <height>141</height>
+      <y>260</y>
+      <width>640</width>
+      <height>100</height>
      </rect>
     </property>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QPushButton" name="button_finish">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
-       <x>-10</x>
-       <y>-1</y>
-       <width>811</width>
-       <height>151</height>
+       <x>320</x>
+       <y>0</y>
+       <width>160</width>
+       <height>100</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="button_start">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-	height: 140;
-	margin: 0;
-}</string>
-        </property>
-        <property name="text">
-         <string>开始</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_stop">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-	height: 140;
-	margin: 0;
-}</string>
-        </property>
-        <property name="text">
-         <string>暂停</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_finish">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-	height: 140;
-	margin: 0;
-}</string>
-        </property>
-        <property name="text">
-         <string>结束</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="button_setbackground">
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
-	height: 140;
-	margin: 0;
-}</string>
-        </property>
-        <property name="text">
-         <string>设置背景</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+        background-color: rgba(255, 255, 255, 50);
+		border: none;
+    }
+    QPushButton:hover {
+        background-color: rgba(255, 255, 255, 80);  
+		color: #002fa7;
+		border: 1px solid white;
+    }
+    QPushButton:pressed {
+        background-color: rgba(255, 255, 255, 100);
+    }</string>
+     </property>
+     <property name="text">
+      <string>结束</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="button_setbackground">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>0</y>
+       <width>160</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+        background-color: rgba(255, 255, 255, 50);
+		border: none;
+    }
+    QPushButton:hover {
+        background-color: rgba(255, 255, 255, 80);  
+		color: #002fa7;
+		border: 1px solid white;
+    }
+    QPushButton:pressed {
+        background-color: rgba(255, 255, 255, 100);
+    }</string>
+     </property>
+     <property name="text">
+      <string>设置背景</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="button_start">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>160</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="baseSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+        background-color: rgba(255, 255, 255, 50);
+		border: none;
+    }
+    QPushButton:hover {
+        background-color: rgba(255, 255, 255, 80);  
+		color: #002fa7;
+		border: 1px solid white;
+    }
+    QPushButton:pressed {
+        background-color: rgba(255, 255, 255, 100);
+    }</string>
+     </property>
+     <property name="text">
+      <string>开始</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="button_stop">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>0</y>
+       <width>160</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+        background-color: rgba(255, 255, 255, 50);
+		border: none;
+    }
+    QPushButton:hover {
+        background-color: rgba(255, 255, 255, 80);  
+		color: #002fa7;
+		border: 1px solid white;
+    }
+    QPushButton:pressed {
+        background-color: rgba(255, 255, 255, 100);
+    }</string>
+     </property>
+     <property name="text">
+      <string>暂停</string>
+     </property>
     </widget>
    </widget>
   </widget>
