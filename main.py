@@ -12,22 +12,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.remaining_time = 25 * 60
         self.setupUi(self)
         self.setFixedSize(640, 360)
-        
-        # 检查并设置背景图片
-        img_dir = os.path.join(os.getcwd(), 'img')
-        if os.path.exists(img_dir):
-            for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
-                bg_path = os.path.join(img_dir, f'background{ext}').replace('\\', '/')
-                if os.path.exists(bg_path):
-                    self.setStyleSheet(f"""
-                        QMainWindow {{
-                            background-image: url({bg_path});
-                            background-position: center;
-                            background-repeat: no-repeat;
-                        }}
-                    """)
-                    break
-        
+        self.set_background_img()
         self.init()
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_time)  # 连接计时器的 timeout 信号到 update_time 方法
@@ -111,19 +96,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             _, ext = os.path.splitext(source_file)
             target_file = os.path.join(img_dir, f'background{ext}')
             shutil.copy(source_file, target_file)
+            self.set_background_img()
 
-            img_dir = os.path.join(os.getcwd(), 'img')
-            if os.path.exists(img_dir):
-                for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
-                    bg_path = os.path.join(img_dir, f'background{ext}').replace('\\', '/')
-                    if os.path.exists(bg_path):
-                        self.setStyleSheet(f"""
-                            QMainWindow {{
-                                background-image: url({bg_path});
-                                background-position: center;
-                                background-repeat: no-repeat;
-                            }}
-                        """)  
+    def set_background_img(self):
+        img_dir = os.path.join(os.getcwd(), 'img')
+        if os.path.exists(img_dir):
+            for ext in ['.png', '.jpg', '.jpeg', '.bmp']:
+                bg_path = os.path.join(img_dir, f'background{ext}').replace('\\', '/')
+                if os.path.exists(bg_path):
+                    self.setStyleSheet(f"""
+                        QMainWindow {{
+                            background-image: url({bg_path});
+                            background-position: center;
+                            background-repeat: no-repeat;
+                        }}
+                    """)  
 
 
 app = QApplication(sys.argv)
