@@ -1,8 +1,10 @@
 import sys
 import os
 import shutil
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QIcon
+from PyQt5.QtMultimedia import QSound
 from ui.tomato import Ui_MainWindow
 
 
@@ -12,6 +14,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.remaining_time = 25 * 60
         self.setupUi(self)
         self.setFixedSize(640, 360)
+        self.setWindowIcon(QIcon('img/icon.png'))
         self.set_background_img()
         self.init()
         self.timer = QTimer(self)
@@ -20,21 +23,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_stop.clicked.connect(self.stop_time)
         self.button_finish.clicked.connect(self.finish_time)
         self.button_setbackground.clicked.connect(self.set_background)
+        self.times
 
     def init(self):
-        times = 0
+        self.times = 0
         try:
             with open("record.txt", 'r+') as f:
                 try:
-                    times = int(f.read())
+                    self.times = int(f.read())
                 except ValueError:
-                    times = 0
+                    self.times = 0
                     f.write('0')
         except FileNotFoundError:
             with open("record.txt", 'w') as f:
                 f.write('0')
 
-        self.text.setText(f"已完成 {times} 次番茄时间")
+        self.text.setText(f"已完成 {self.times} 次番茄时间")
         self.time_remain.setText("25:00")
 
     def start_time(self):
@@ -50,18 +54,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.remaining_time <= 0:
             self.timer.stop()
             self.time_remain.setText("00:00")
+            
+            # 判断是否在休息时间
+            if self.text.text() == "      休息时间...":
+                QSound.play('music/finish.wav')  # 休息结束时也播放提示音
+                self.text.setText(f"已完成 {self.times} 次番茄时间")
+                self.start_time()
+                return 
+                
+            # 番茄钟结束，开始休息
             with open("record.txt", 'r+') as f:
                 try:
-                    times = int(f.read())
+                    self.times = int(f.read())
                 except ValueError:
-                    times = 0
-                times += 1
+                    self.times = 0
+                self.times += 1
                 f.seek(0)
-                f.write(str(times))
-            self.text.setText(f"已完成 {times} 次番茄时间")
-            self.button_start.setEnabled(True)
-            self.button_stop.setEnabled(False)
-            self.button_finish.setEnabled(False)
+                f.write(str(self.times))
+            self.text.setText(f"已完成 {self.times} 次番茄时间")
+            QSound.play('music/finish.wav')
+            # 设置5分钟休息时间
+            self.remaining_time = 5 * 60 # 5分钟休息
+            self.time_remain.setText("05:00")
+            self.text.setText("      休息时间...")
+            self.timer.start(1000)
         else:
             minutes, seconds = divmod(self.remaining_time, 60)
             self.time_remain.setText(f"{minutes:02}:{seconds:02}")
@@ -76,6 +92,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def finish_time(self):
         self.timer.stop()
+        self.text.setText(f"已完成 {self.times} 次番茄时间")
         self.time_remain.setText("25:00")
         self.button_start.setEnabled(True)
         self.button_stop.setEnabled(False)
