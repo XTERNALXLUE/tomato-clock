@@ -1,7 +1,7 @@
 import sys
 import os
 import shutil
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QSystemTrayIcon, QMenu, QAction
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QIcon
 from PyQt5.QtMultimedia import QSound
@@ -23,7 +23,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_stop.clicked.connect(self.stop_time)
         self.button_finish.clicked.connect(self.finish_time)
         self.button_setbackground.clicked.connect(self.set_background)
-        self.times
+        self.times = 0
+        
+        # 创建系统托盘
+        self.tray_icon = QSystemTrayIcon(self)
+        self.tray_icon.setIcon(QIcon('img/icon.png'))
+        self.tray_icon.activated.connect(self.tray_icon_activated)
+        
+        # 创建托盘菜单
+        tray_menu = QMenu()
+        show_action = QAction("显示", self)
+        quit_action = QAction("退出", self)
+        show_action.triggered.connect(self.show)
+        quit_action.triggered.connect(self.quit_app)
+        tray_menu.addAction(show_action)
+        tray_menu.addAction(quit_action)
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
 
     def init(self):
         self.times = 0
@@ -48,6 +64,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.remaining_time = 25 * 60
         self.time_remain.setText("25:00")
         self.timer.start(1000)  # 计时器每秒触发一次
+        # 显示托盘气泡提示
+        self.tray_icon.showMessage(
+            "番茄钟",
+            "开始专注时间！",
+            QSystemTrayIcon.Information,
+            3000  # 显示3秒
+        )
 
     def update_time(self):
         self.remaining_time -= 1
@@ -59,6 +82,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.text.text() == "      休息时间...":
                 QSound.play('music/finish.wav')  # 休息结束时也播放提示音
                 self.text.setText(f"已完成 {self.times} 次番茄时间")
+                self.show()  # 显示窗口
+                self.showNormal()  # 确保窗口不是最小化状态
                 self.start_time()
                 return 
                 
@@ -74,9 +99,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.text.setText(f"已完成 {self.times} 次番茄时间")
             QSound.play('music/finish.wav')
             # 设置5分钟休息时间
-            self.remaining_time = 5 * 60 # 5分钟休息
+            self.remaining_time = 5 * 60
             self.time_remain.setText("05:00")
             self.text.setText("      休息时间...")
+            self.show()  # 显示窗口
+            self.showNormal()  # 确保窗口不是最小化状态
             self.timer.start(1000)
         else:
             minutes, seconds = divmod(self.remaining_time, 60)
@@ -128,6 +155,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                             background-repeat: no-repeat;
                         }}
                     """)  
+
+    def closeEvent(self, event):
+        # 直接关闭程序
+        event.accept()
+        self.quit_app()
+
+    def changeEvent(self, event):
+        # 处理最小化事件
+        if event.type() == event.WindowStateChange and self.isMinimized():
+            self.hide()
+            self.tray_icon.showMessage(
+                "番茄钟",
+                "程序已最小化到托盘！",
+                QSystemTrayIcon.Information,
+                3000
+            )
+    
+    def quit_app(self):
+        self.tray_icon.hide()  # 确保托盘图标被移除
+        QApplication.quit()
+
+    def tray_icon_activated(self, reason):
+        if reason == QSystemTrayIcon.Trigger:
+            self.show()
+            self.showNormal()  # 确保窗口不是最小化状态
 
 
 app = QApplication(sys.argv)
