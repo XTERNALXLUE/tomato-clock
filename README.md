@@ -14,19 +14,19 @@
 
 ## 项目结构
 
-project/
-│
-├── main.py          # 主程序
-├── ui/
-│   └── tomato.py    # UI文件
-├── img/
-│   ├── icon.png     # 程序图标
-│   └── background.* # 背景图片（可选）
-├── music/
-│   └── finish.wav   # 提示音效
-├── record.txt       # 记录完成次数
-├── requirements.txt # 项目依赖
-└── README.md        # 项目说明
+project/</br>
+│</br>
+├── main.py          # 主程序</br>
+├── ui/</br>
+│   └── tomato.py    # UI文件</br>
+├── img/</br>
+│   ├── icon.png     # 程序图标</br>
+│   └── background.* # 背景图片（可选）</br>
+├── music/</br>
+│   └── finish.wav   # 提示音效</br>
+├── record.txt       # 记录完成次数</br>
+├── requirements.txt # 项目依赖</br>
+└── README.md        # 项目说明</br>
 
 ## 运行环境
 
