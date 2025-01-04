@@ -24,6 +24,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_finish.clicked.connect(self.finish_time)
         self.button_setbackground.clicked.connect(self.set_background)
         self.times = 0
+        self.continuous_times = 0  # 添加连续计数器
         
         # 创建系统托盘
         self.tray_icon = QSystemTrayIcon(self)
@@ -34,7 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         tray_menu = QMenu()
         show_action = QAction("显示", self)
         quit_action = QAction("退出", self)
-        show_action.triggered.connect(self.show)
+        show_action.triggered.connect(self.show_window)
         quit_action.triggered.connect(self.quit_app)
         tray_menu.addAction(show_action)
         tray_menu.addAction(quit_action)
@@ -94,16 +95,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 except ValueError:
                     self.times = 0
                 self.times += 1
+                self.continuous_times += 1  # 增加连续计数
                 f.seek(0)
                 f.write(str(self.times))
+            
             self.text.setText(f"已完成 {self.times} 次番茄时间")
             QSound.play('music/finish.wav')
-            # 设置5分钟休息时间
-            self.remaining_time = 5 * 60
-            self.time_remain.setText("05:00")
+            
+            # 判断是否连续完成四个番茄钟
+            if self.continuous_times % 4 == 0:
+                # 设置25分钟休息时间
+                self.remaining_time = 25 * 60
+                self.time_remain.setText("25:00")
+            else:
+                # 设置5分钟休息时间
+                self.remaining_time = 5 * 60
+                self.time_remain.setText("05:00")
+            
             self.text.setText("      休息时间...")
-            self.show()  # 显示窗口
-            self.showNormal()  # 确保窗口不是最小化状态
+            self.show()
+            self.showNormal()
             self.timer.start(1000)
         else:
             minutes, seconds = divmod(self.remaining_time, 60)
@@ -124,6 +135,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_start.setEnabled(True)
         self.button_stop.setEnabled(False)
         self.button_finish.setEnabled(False)
+        self.continuous_times = 0  # 重置连续计数
 
     def set_background(self):
         file_dialog = QFileDialog()
@@ -157,7 +169,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     """)  
 
     def closeEvent(self, event):
-        # 直接关闭程序
+        self.continuous_times = 0  # 关闭程序时重置连续计数
         event.accept()
         self.quit_app()
 
@@ -176,10 +188,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tray_icon.hide()  # 确保托盘图标被移除
         QApplication.quit()
 
+    def show_window(self):
+        self.show()
+        self.showNormal()  # 确保窗口不是最小化状态
+
     def tray_icon_activated(self, reason):
         if reason == QSystemTrayIcon.Trigger:
-            self.show()
-            self.showNormal()  # 确保窗口不是最小化状态
+            self.show_window()  
 
 
 app = QApplication(sys.argv)
