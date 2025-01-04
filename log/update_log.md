@@ -4,7 +4,7 @@
 
 更改背景功能待实现
 
-![img_demo](./img/img_demo.png)
+![img_demo](../img/img_demo.png)
 
 ——2025.1.1
 
@@ -24,7 +24,7 @@
 
 会优先使用png作为背景图片
 
-![img_demo2](./img/img_demo2.png)
+![img_demo2](../img/img_demo2.png)
 
 ——2025.1.2
 
@@ -42,7 +42,7 @@
 
 否则将一直自动按照25-5-25-5...的时间段计时
 
-![img_demo3](./img/img_demo3.png)
+![img_demo3](../img/img_demo3.png)
 
 ——2025.1.3
 
@@ -50,13 +50,13 @@
 
 添加了点击开始后会弹出提示信息
 
-![img_start_message](./img/img_start_message.png)
+![img_start_message](../img/img_start_message.png)
 
 点击最小化后会隐藏至托盘
 
-![img_hide_to_tray1](./img/img_hide_to_tray1.png)
+![img_hide_to_tray1](../img/img_hide_to_tray1.png)
 
-![img_hide_to_tray2](./img/img_hide_to_tray2.png)
+![img_hide_to_tray2](../img/img_hide_to_tray2.png)
 
 在每个番茄钟以及休息时间结束后
 
